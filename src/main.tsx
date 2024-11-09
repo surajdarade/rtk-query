@@ -6,7 +6,6 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./store";
 
-
 import "./index.css";
 
 const router = createBrowserRouter([
@@ -24,7 +23,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/contact",
-        element: <p>Contact Us</p>,
+        element: (
+          <div className="flex items-center justify-center text-5xl h-screen">
+            Contact Us
+          </div>
+        ),
       },
     ],
   },

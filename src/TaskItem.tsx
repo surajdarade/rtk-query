@@ -51,7 +51,7 @@ const TaskItem: FC<TaskItemProps> = ({ task, updateTask, deleteTask }) => {
           className="ml-auto h-5 w-5 cursor-pointer text-red-400 hover:text-red-500"
           onClick={(e) => {
             e.preventDefault();
-            deleteTask(id); // Pass the id as a number here
+            deleteTask(id); 
           }}
         >
           <polyline points="3 6 5 6 21 6" />

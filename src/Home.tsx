@@ -29,7 +29,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex h-screen flex-grow items-start justify-center bg-gray-900 p-4">
+    <div className="flex h-screen flex-grow items-start justify-center bg-[#0d1117] p-4">
       <div className="task-app w-full max-w-md rounded-lg bg-gray-800 px-6 pb-2 pt-6 text-gray-200 shadow-lg">
         <div className="mb-6 flex items-center">
           <svg
@@ -93,10 +93,10 @@ export default function Home() {
             ))
           )}
         </div>
+        <Link to="/contact" className="text-white flex items-center justify-center m-4 bg-green-500 p-1 rounded-lg max-w-md">
+          Redirect
+        </Link>
       </div>
-      <Link to="contact" className="absolute text-gray-800 hover:text-gray-400">
-        Contact
-      </Link>
     </div>
   );
 }
