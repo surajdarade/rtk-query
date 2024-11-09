@@ -1,67 +1,31 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useState } from "react";
-import Task from "./TaskItem";
+import { useState, FormEvent } from "react";
+import TaskItem from "./TaskItem";
 import { Link } from "react-router-dom";
-
-interface TaskType {
-  id: number;
-  value?: string | undefined;
-  completed: boolean;
-}
+import {
+  useAddTaskMutation,
+  useDeleteTaskMutation,
+  useGetTasksQuery,
+  useUpdateTaskMutation,
+} from "./apiSlice";
+import { Task } from "./apiSlice";
 
 export default function Home() {
-  const [tasksList, setTasksList] = useState<TaskType[]>([]);
   const [newTask, setNewTask] = useState<string>("");
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isError, setIsError] = useState<boolean>(false);
-  const [error, setError] = useState<Error | null>(null);
 
-  const BASE_URL = "http://localhost:3000";
+  const { data: tasksList, isError, isLoading } = useGetTasksQuery();
 
-  useEffect(() => {
-    setIsLoading(true);
-    getTasks().then(() => setIsLoading(false));
-  }, []);
+  const [addTask] = useAddTaskMutation();
+  const [updateTask] = useUpdateTaskMutation();
+  const [deleteTask] = useDeleteTaskMutation();
 
-  const getTasks = async (): Promise<void> => {
-    try {
-      const response = await fetch(`${BASE_URL}/tasks`);
-      const tasks: TaskType[] = await response.json();
-      setTasksList(tasks.reverse());
-    } catch (err: any) {
-      setIsLoading(false);
-      setIsError(true);
-      setError(err);
-    }
-  };
-
-  const addTask = async (task: Omit<TaskType, "id">): Promise<void> => {
-    await fetch(`${BASE_URL}/tasks`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(task),
-    });
-    getTasks();
-  };
-
-  const updateTask = async (updatedTask: TaskType): Promise<void> => {
-    await fetch(`${BASE_URL}/tasks/${updatedTask.id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updatedTask),
-    });
-    getTasks();
-  };
-
-  const deleteTask = async (id: number): Promise<void> => {
-    await fetch(`${BASE_URL}/tasks/${id}`, {
-      method: "DELETE",
-    });
-    getTasks();
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const task: Partial<Task> = {
+      value: newTask,
+      completed: false,
+    };
+    addTask(task);
+    setNewTask("");
   };
 
   return (
@@ -85,15 +49,7 @@ export default function Home() {
           <h4 className="ml-3 text-lg font-semibold">My Tasks</h4>
         </div>
         <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            const task = {
-              value: newTask,
-              completed: false,
-            };
-            addTask(task);
-            setNewTask("");
-          }}
+          onSubmit={handleSubmit}
           className="my-2 flex h-8 w-full items-center rounded border-2 border-solid border-gray-700 px-2 text-sm font-medium"
         >
           <svg
@@ -124,12 +80,11 @@ export default function Home() {
           {isLoading ? (
             <p className="text-center">Loading...</p>
           ) : isError ? (
-            <p className="text-center">
-              {error?.message || "Something went wrong"}
-            </p>
+            <p className="text-center">{"Something went wrong"}</p>
           ) : (
-            tasksList.map((task) => (
-              <Task
+            tasksList &&
+            tasksList.map((task: Task) => (
+              <TaskItem
                 key={task.id}
                 task={task}
                 updateTask={updateTask}
@@ -139,10 +94,7 @@ export default function Home() {
           )}
         </div>
       </div>
-      <Link
-        to="contact"
-        className="text-gray-800 hover:text-gray-400 absolute"
-      >
+      <Link to="contact" className="absolute text-gray-800 hover:text-gray-400">
         Contact
       </Link>
     </div>
