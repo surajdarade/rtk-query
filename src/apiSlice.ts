@@ -6,8 +6,6 @@ export interface Task {
   completed: boolean; 
 }
 
-let nextTaskId = 7;
-
 export const api = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000" }),
   tagTypes: ["Tasks"],
@@ -22,17 +20,17 @@ export const api = createApi({
         url: "/tasks",
         method: "POST",
         body: {
-          id: nextTaskId++,
           value: task.value ?? "New Task",
           completed: task.completed ?? false,
         },
       }),
       invalidatesTags: ["Tasks"],
       async onQueryStarted(task, { dispatch, queryFulfilled }) {
+        // Optimistically update the cache
         const patchResult = dispatch(
           api.util.updateQueryData("getTasks", undefined, (draft) => {
             draft.unshift({
-              id: nextTaskId++, 
+              id: 0,  // Use placeholder id (to be replaced by the server response)
               value: task.value ?? "New Task",
               completed: task.completed ?? false,
             });
@@ -40,9 +38,20 @@ export const api = createApi({
         );
 
         try {
-          await queryFulfilled;
-        } catch {
+          const { data } = await queryFulfilled;
+          // Update the cache with the actual task id from the server response
           patchResult.undo();
+          dispatch(
+            api.util.updateQueryData("getTasks", undefined, (tasksList) => {
+              const taskIndex = tasksList.findIndex((el) => el.id === 0);
+              if (taskIndex >= 0) {
+                tasksList[taskIndex] = data;
+              }
+            })
+          );
+        } catch (err) {
+          console.error("Add task failed", err);
+          patchResult.undo(); // Revert cache on error
         }
       },
     }),
@@ -74,8 +83,9 @@ export const api = createApi({
 
         try {
           await queryFulfilled;
-        } catch {
-          patchResult.undo();
+        } catch (err) {
+          console.error("Update task failed", err);
+          patchResult.undo(); // Revert cache on error
         }
       },
     }),
@@ -97,8 +107,9 @@ export const api = createApi({
 
         try {
           await queryFulfilled;
-        } catch {
-          patchResult.undo();
+        } catch (err) {
+          console.error("Delete task failed", err);
+          patchResult.undo(); // Revert cache on error
         }
       },
     }),

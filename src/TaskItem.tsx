@@ -1,14 +1,13 @@
-interface TaskProps {
-  task: {
-    id: number;
-    value?: string;
-    completed: boolean;
-  };
-  updateTask: (task: { id: number; completed: boolean }) => void;
-  deleteTask: (id: number) => void;
+import { FC } from "react";
+import { Task } from "./apiSlice";
+
+interface TaskItemProps {
+  task: Task;
+  updateTask: (task: Pick<Task, "id" | "completed">) => void;
+  deleteTask: (id: number) => void; // Make sure deleteTask expects a number
 }
 
-export default function Task({ task, updateTask, deleteTask }: TaskProps) {
+const TaskItem: FC<TaskItemProps> = ({ task, updateTask, deleteTask }) => {
   const { id, value, completed } = task;
 
   return (
@@ -16,7 +15,7 @@ export default function Task({ task, updateTask, deleteTask }: TaskProps) {
       <input
         className="hidden"
         type="checkbox"
-        id={id.toString()}
+        id={id.toString()} // Convert id to string for HTML id attribute
         checked={completed}
         onChange={() => {
           updateTask({ id, completed: !completed });
@@ -24,7 +23,6 @@ export default function Task({ task, updateTask, deleteTask }: TaskProps) {
       />
       <label
         className="flex h-10 items-center rounded px-2 hover:bg-gray-900"
-        htmlFor={id.toString()}
       >
         <span className="flex h-5 w-5 cursor-pointer items-center justify-center rounded-full border-2 border-gray-500 text-transparent">
           <svg
@@ -53,7 +51,7 @@ export default function Task({ task, updateTask, deleteTask }: TaskProps) {
           className="ml-auto h-5 w-5 cursor-pointer text-red-400 hover:text-red-500"
           onClick={(e) => {
             e.preventDefault();
-            deleteTask(id);
+            deleteTask(id); // Pass the id as a number here
           }}
         >
           <polyline points="3 6 5 6 21 6" />
@@ -62,4 +60,6 @@ export default function Task({ task, updateTask, deleteTask }: TaskProps) {
       </label>
     </div>
   );
-}
+};
+
+export default TaskItem;
