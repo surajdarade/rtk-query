@@ -1,3 +1,9 @@
 {
-  "tasks": []
+  "tasks": [
+    {
+      "id": "68c0",
+      "value": "Task 1",
+      "completed": false
+    }
+  ]
 }

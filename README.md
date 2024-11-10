@@ -1,50 +1,27 @@
-# React + TypeScript + Vite
+# React Todo List with RTK Query and JSON-server 📝
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a simple To-Do list application built using React, TypeScript, Tailwind CSS, and powered by RTK Query for API state management. The data is served via JSON-server, allowing for easy mocking of backend responses. This project demonstrates the power of modern React development, providing an efficient and simple solution to managing state in a small application.
 
-Currently, two official plugins are available:
+## Features 🚀
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **CRUD Operations**: Add, update, and delete tasks.
+- **State Management**: Utilizes Redux Toolkit Query (RTK Query) to handle data fetching and caching seamlessly.
+- **Typescript**: Ensures type safety and developer-friendly experience.
+- **Tailwind CSS**: Provides utility-first CSS for a sleek and responsive UI.
+- **JSON-server**: A lightweight mock API for quick backend setup.
 
-## Expanding the ESLint configuration
+## Tech Stack 💻
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **React**: JavaScript library for building user interfaces.
+- **Redux Toolkit (RTK Query)**: A set of tools that simplifies state management and data fetching in React applications.
+- **Typescript**: A strongly typed programming language that builds on JavaScript.
+- **Tailwind CSS**: A utility-first CSS framework for rapidly building custom designs.
+- **JSON-server**: A full fake REST API for quick prototyping.
+  
+## Features of RTK Query ⚡
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+- **Auto Caching**: Automatically caches data for efficient network requests.
+- **Polling**: Built-in polling functionality for real-time applications.
+- **Optimistic Updates**: RTK Query supports optimistic updates, allowing for more responsive applications.
+- **Automatic Fetching & Mutation**: Simplifies the handling of server-side state with minimal boilerplate.
+- **Error Handling**: Built-in error states and control flow for better user experience.
