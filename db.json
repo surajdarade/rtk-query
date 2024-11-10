@@ -2,7 +2,52 @@
   "tasks": [
     {
       "id": "68c0",
-      "value": "Task 1",
+      "value": "Build a simple to-do list app",
+      "completed": false
+    },
+    {
+      "id": "9a1b",
+      "value": "Create a basic weather app using an API",
+      "completed": false
+    },
+    {
+      "id": "b2c3",
+      "value": "Design a responsive portfolio website",
+      "completed": false
+    },
+    {
+      "id": "c4d5",
+      "value": "Implement a CRUD application with React and Redux",
+      "completed": false
+    },
+    {
+      "id": "d6e7",
+      "value": "Build a calculator using vanilla JavaScript",
+      "completed": false
+    },
+    {
+      "id": "e8f9",
+      "value": "Create a RESTful API using Node.js and Express",
+      "completed": false
+    },
+    {
+      "id": "f0a1",
+      "value": "Build a blog with authentication and authorization",
+      "completed": false
+    },
+    {
+      "id": "g2b3",
+      "value": "Write a script to scrape a website and extract data",
+      "completed": false
+    },
+    {
+      "id": "h4c5",
+      "value": "Develop a to-do app with drag and drop functionality",
+      "completed": false
+    },
+    {
+      "id": "i6d7",
+      "value": "Create a simple game using JavaScript and HTML5 Canvas",
       "completed": false
     }
   ]
