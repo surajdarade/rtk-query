@@ -2,6 +2,8 @@
 
 This is a simple To-Do list application built using React, TypeScript, Tailwind CSS, and powered by RTK Query for API state management. The data is served via JSON-server, allowing for easy mocking of backend responses. This project demonstrates the power of modern React development, providing an efficient and simple solution to managing state in a small application.
 
+# Preview
+
 ![To-Do List App](./preview.png)
 
 ## Features 🚀
